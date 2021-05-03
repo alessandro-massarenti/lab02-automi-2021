@@ -29,3 +29,7 @@ $(DEPS): pascal.g4
 clean:
 	rm -f $(OBJS) $(TOBJS) $(SCOBJS) syncheck $(ANTLRS)
 
+test:
+	./syncheck tests/gcd.pas
+	./syncheck tests/repeat.pas
+	./syncheck tests/valid.pas
