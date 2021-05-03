@@ -1,2 +1,5 @@
 
-pascal/.antlr/*
+**/pascal/.antlr/
+*.java
+*.tokens
+*.interp

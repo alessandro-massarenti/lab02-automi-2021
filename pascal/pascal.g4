@@ -2,33 +2,42 @@ grammar pascal;
 
 // Regole del Parser
 
+// Program outer wrapper
 start     : 'program' ID ';' 'var' decl_list main_code EOF ;
 
+
+// Variable declaration list
 decl_list : decl | decl decl_list ;
 decl      : var ':' 'integer' ';';
 var       : ID | var ',' ID;
 
+
+// Main code wrapper
 main_code : 'begin' st_list 'end' '.' ;
 code_block: statement | st_list | 'begin' st_list 'end';
-st_list   : statement ';' | statement ';' st_list  ;
-          
-statement : assign | repeat | branch | out | in;
+st_list   : statement ';' | statement ';' st_list;
 
+// Le tipologie di statement disponibili
+statement : assign | cicle_until | branch | out | in;
+
+// Gli statements
 assign    : ID ':=' expr | ID ':=' arith;
+cicle_until    : 'repeat' code_block 'until' relation;
+branch    : 'if' relation 'then' code_block | 
+            'if' relation 'then' code_block 'else' code_block;
 out       : 'writeln' '(' expr ')' | 'writeln' '(' STRING ')';
 in        : 'readln' '(' ID ')';
 
-arith     : expr | arith arithmetic_operator arith | '(' arith ')';
-
-repeat    : 'repeat' code_block 'until' relation;
-branch    : 'if' relation 'then' code_block | 
-            'if' relation 'then' code_block 'else' code_block;
+// I blocchi principali
 expr      : NUMBER | ID;
-arith_expr: arith | expr;
+arith     : expr | arith arithmetic_operator arith;
+arith_expr: arith | expr; // Un raggruppamento per renderli più managable
+
 relation  : arith_expr arithmetic_operator arith_expr |
             relation logic_operator relation |
             arith_expr comparison_operator arith_expr ;
 
+// Gli operatori
 arithmetic_operator : PLUS | MINUS | PER | DIV | MOD;
 logic_operator : AND | OR | NOT;
 comparison_operator : LT | LEQ | EQ | GEQ | NEQ | GT;
