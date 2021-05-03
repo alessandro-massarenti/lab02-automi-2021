@@ -14,8 +14,8 @@ var       : ID | var ',' ID;
 
 // Main code wrapper
 main_code : 'begin' st_list 'end' '.' ;
-code_block: statement | st_list | 'begin' st_list 'end';
-st_list   : statement ';' | statement ';' st_list;
+code_block: st_list | 'begin' st_list 'end';
+st_list   : statement | statement ';' | statement ';' st_list;
 
 // Le tipologie di statement disponibili
 statement : assign | cicle_until | branch | out | in;
@@ -31,7 +31,7 @@ in        : 'readln' '(' ID ')';
 // I blocchi principali
 expr      : NUMBER | ID;
 arith     : expr | arith arithmetic_operator arith;
-arith_expr: arith | expr; // Un raggruppamento per renderli più managable
+arith_expr: arith | expr;
 
 relation  : arith_expr arithmetic_operator arith_expr |
             arith_expr comparison_operator arith_expr |
