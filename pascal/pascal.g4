@@ -42,9 +42,8 @@ arithmetic_operator : PLUS | MINUS | PER | DIV | MOD;
 logic_operator : AND | OR | NOT;
 comparison_operator : LT | LEQ | EQ | GEQ | NEQ | GT;
 
+
 // Regole del Lexer
-
-
 PLUS      : '+'; 
 MINUS     : '-';
 PER       : '*';
