@@ -34,8 +34,8 @@ arith     : expr | arith arithmetic_operator arith;
 arith_expr: arith | expr; // Un raggruppamento per renderli più managable
 
 relation  : arith_expr arithmetic_operator arith_expr |
-            relation logic_operator relation |
-            arith_expr comparison_operator arith_expr ;
+            arith_expr comparison_operator arith_expr |
+            relation logic_operator relation;
 
 // Gli operatori
 arithmetic_operator : PLUS | MINUS | PER | DIV | MOD;
