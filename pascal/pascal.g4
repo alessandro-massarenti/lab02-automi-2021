@@ -9,20 +9,29 @@ decl      : var ':' 'integer' ';';
 var       : ID | var ',' ID;
 
 main_code : 'begin' st_list 'end' '.' ;
-code_block: statement | 'begin' st_list 'end' ;
+code_block: statement | 'begin' st_list 'end';
 st_list   : statement ';' | statement ';' st_list  ;
           
-statement : assign | branch | repeat | out | in;
+statement : (assign | repeat | branch | out | in) ';';
 
-assign    : ID ':=' expr ;
+assign    : ID ':=' expr | ID ':=' arith;
 out       : 'writeln' '(' expr ')' | 'writeln' '(' STRING ')';
 in        : 'readln' '(' ID ')';
+
+arith     : expr | arith arithmetic_operator arith | '(' arith ')';
+
+repeat    : 'repeat' code_block 'until' relation;
 branch    : 'if' relation 'then' code_block | 
             'if' relation 'then' code_block 'else' code_block;
-repeat    : 'repeat' code_block 'until' relation;
 expr      : NUMBER | ID;
-relation  : expr LT expr | expr LEQ expr | expr EQ expr 
-          | expr NEQ expr | expr GEQ expr | expr GT expr ;
+arith_expr: arith | expr;
+relation  : arith_expr arithmetic_operator arith_expr |
+            relation logic_operator relation |
+            arith_expr comparison_operator arith_expr ;
+
+arithmetic_operator : PLUS | MINUS | PER | DIV | MOD;
+logic_operator : AND | OR | NOT;
+comparison_operator : LT | LEQ | EQ | GEQ | NEQ | GT;
 
 // Regole del Lexer
 
@@ -32,6 +41,10 @@ MINUS     : '-';
 PER       : '*';
 DIV       : '/';
 MOD       : '%';
+
+AND       : 'and' ;
+OR        : 'or' ;
+NOT       : 'not' ;
 
 EQ        : '=' ;
 LT        : '<' ;
