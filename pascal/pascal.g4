@@ -9,10 +9,10 @@ decl      : var ':' 'integer' ';';
 var       : ID | var ',' ID;
 
 main_code : 'begin' st_list 'end' '.' ;
-code_block: statement | 'begin' st_list 'end';
+code_block: statement | st_list | 'begin' st_list 'end';
 st_list   : statement ';' | statement ';' st_list  ;
           
-statement : (assign | repeat | branch | out | in) ';';
+statement : assign | repeat | branch | out | in;
 
 assign    : ID ':=' expr | ID ':=' arith;
 out       : 'writeln' '(' expr ')' | 'writeln' '(' STRING ')';
